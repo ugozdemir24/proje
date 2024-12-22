@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Login Form</title>
+  <link href="http://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { background-color: #080710; font-family: 'Poppins', sans-serif; }
+    form { width: 400px; margin: 0 auto; padding: 50px; background-color: rgba(255, 255, 255, 0.13); border-radius: 10px; color: white; }
+    input, button { width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; }
+    button { background-color: #23a2f6; color: white; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <form id="login-form">
+    <h3>Login Here</h3>
+    <label for="email">Email</label>
+    <input type="email" id="email" placeholder="Enter your email" required>
+
+    <label for="sifre">Password</label>
+    <input type="password" id="sifre" placeholder="Enter your password" required>
+
+    <button type="submit">Login</button>
+  </form>
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const data = {
+        email: document.getElementById('email').value,
+        sifre: document.getElementById('sifre').value,
+      };
+
+      fetch('http://localhost:5005/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert(data.message || data.error);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error: ' + error);
+      });
+    });
+  </script>
+</body>
+</html>
+
